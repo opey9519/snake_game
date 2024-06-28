@@ -15,8 +15,15 @@ run = True
 # Position variables
 x1 = 300
 y1 = 300
-x_apple = random.randrange(0, 801)
-y_apple = random.randrange(0, 601)
+x_apple = random.randrange(0, 781)
+y_apple = random.randrange(0, 581)
+snake_list = []
+snake_length = 1
+
+# Function to plot snake parts
+def plot_snake(screen, color, snake_list):
+    for x, y in snake_list:
+        pygame.draw.rect(screen, color, [x, y, 20, 20])
 
 # Movement change variables
 x1_change = 0
@@ -60,21 +67,34 @@ while run:
     # Screen black on refresh
     screen.fill((0,0,0))
 
+    # Tracks position of head of snake
+    head = []
+    head.append(x1)
+    head.append(y1)
+    snake_list.append(head)
+
     # Creating rectangle with rgb (lime green)
-    snake = pygame.draw.rect(screen, (0, 255, 0), [x1,y1,20,20])
+    snake = pygame.draw.rect(screen, (0, 255, 0), [x1, y1, 20, 20])
     apple = pygame.draw.rect(screen, (255,0,0), [x_apple, y_apple, 20, 20])
+
+    if len(snake_list) > snake_length:
+        del snake_list[0]
 
     # Collision statement (if snake collides with apple, respawn apple, append snake)
     if pygame.Rect.colliderect(snake, apple):
-        x_apple = random.randrange(0, 801)
-        y_apple = random.randrange(0, 601)
-
+        x_apple = random.randrange(0, 781)
+        y_apple = random.randrange(0, 581)
+        snake_length += 5
+        
         apple = pygame.draw.rect(screen, (255,0,0), [x_apple, y_apple, 20, 20])
+
+    # Plots an instance of rectangle based on snake length (incremented by food collision)
+    snake_parts = plot_snake(screen, (0, 255, 0), snake_list)
     
     # Updates the screen to allow next frame
     pygame.display.update()
 
     # Sets frames per second to 30
-    clock.tick(30)
+    clock.tick(20)
 
 pygame.quit() # Quits intializer
