@@ -66,8 +66,10 @@ while run:
     # If snake hits boundaries game ends
     if x1 <= 0 or x1 >= 800:
         run = False
+        print('Game Over!')
     elif y1 <= 0 or y1 >= 600:
         run = False
+        print('Game Over!')
     
     # Screen black on refresh
     screen.fill((0,0,0))
@@ -92,6 +94,17 @@ while run:
         snake_length += 5
         
         apple = pygame.draw.rect(screen, (255,0,0), [x_apple, y_apple, 20, 20])
+    head1 = [x1, y1]
+
+    # If snake comes into contact with itself, game over
+    if head1 in snake_list[:-1]:
+        run = False
+        print('Game Over!')
+
+    # Win condition
+    if snake_length == 200:
+        run = False
+        print('You win!')
 
     # Plots an instance of rectangle based on snake length (incremented by food collision)
     plot_snake(screen, (0, 255, 0), snake_list)
