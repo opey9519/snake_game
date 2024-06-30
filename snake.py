@@ -30,6 +30,9 @@ x1_change = 0
 y1_change = 0
 direction = 'x' # Directional variable that prohibits opposite direcitonal movement
 
+# Additional variables
+score = 1
+
 clock = pygame.time.Clock()
 
 while run:
@@ -92,6 +95,7 @@ while run:
         x_apple = random.randrange(0, 781)
         y_apple = random.randrange(0, 581)
         snake_length += 5
+        score += 1
         
         apple = pygame.draw.rect(screen, (255,0,0), [x_apple, y_apple, 20, 20])
     head1 = [x1, y1]
@@ -102,7 +106,7 @@ while run:
         print('Game Over!')
 
     # Win condition
-    if snake_length == 200:
+    if score == 200:
         run = False
         print('You win!')
 
